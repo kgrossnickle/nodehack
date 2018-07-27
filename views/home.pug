@@ -1,14 +1,15 @@
 extends layout
 
 block content
-  h1 
-    center Plan Your Trip!
-  center
-    p.lead Drag/stretch Blue square for a starting area of airports. 
-           br 
-           p.lead Drag/stretch the red square for a landing area of airports
-  hr
-  .row
+  .container
+    h2 
+      center Plan Your Trip!
+    center
+      h6 Drag/stretch Blue square for a starting area of airports. 
+             br 
+             h6 Drag/stretch the red square for a landing area of airports
+    .card(style='background-color: #000')
+    .row
   center <div id="map"  style="height:400px"></div>
   script.
       var rectangle;
@@ -32,8 +33,6 @@ block content
         };
 
         // Define the rectangle and set its editable property to true.
-
-
         // Define an info window on the map.
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 38.610988647725, lng: -92.4499},
@@ -106,7 +105,17 @@ block content
       }
 
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuehQ2KPVZ3fVpvhzyVpEYI9QntDN5DOE&callback=initMap">
-  </script>    
+  </script>
+
+  .form-group
+  .offset-md-2.col-md-8.p-1
+  center
+    form(method='POST')
+      input(type='hidden', name='_csrf', value=_csrf)
+      .form-group
+          button.btn.btn-primary(type='submit')
+            i.fas.fa-plane
+            | Find Trips   
 //-  
   .row
     .col-md-6
