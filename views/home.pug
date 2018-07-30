@@ -1,17 +1,69 @@
 extends layout
-
 block content
-  .container
-    h2 
-      center Plan Your Trip!
-    center
-      h6 Drag/stretch Blue square for a starting area of airports. 
-             br 
-             h6 Drag/stretch the red square for a landing area of airports
-    .card(style='background-color: #000')
-    .row
-  center <div id="map"  style="height:400px"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
+  .head-search(style="position:relative;top:0px;left:0px;margin-bottom:10px;padding-top:50px;width: 100vw;margin-left:calc(-50vw + 50%);background-image:url('img/sb2 (1).png');background-size:     cover; background-repeat:   no-repeat;background-position: center center;   display: flex;justify-content: center;align-items: center; ")
+    .search(style="background:rgba(0, 0, 0, .4);color:white;display: inline-block; border-radius: 25px;    padding: 15px;margin-top:10px;margin-bottom:5px; ")      
+      form( class="form-inline")
+        input(type='hidden', name='_csrf', value=_csrf)
+        .form-group.row
+          label(class='col-md-2 col-form-label font-weight-bold', for='From') From
+          .col-md-8
+            input.form-control( type="text" name="r16R71!" autocomplete="false" )
+        .form-group.row
+          label(class='col-md-2 col-form-label font-weight-bold', for='To' ) To
+          .col-md-8
+            input.form-control(type='text', name='r16R71', id='name', autocomplete="false")
+        .form-group.row
+          label(class='col-md-2 col-form-label font-weight-bold', for='Depart') Depart
+          .col-md-8
+            input.form-control(type='text', name='r16R71', id="depart", autocomplete="false")
+        .form-group.row
+          label(class='col-md-2 col-form-label font-weight-bold', for='Return') Return
+          .col-md-8
+            input.form-control(type='text', name='r16R71', id='return', autocomplete="false")
+        .form-group
+          offset-md-2.col-md-8.p-1
+            button.btn.btn-primary(id="showmapbutton" onclick="showmap()")
+              i.fas.fa-globe-americas
+              | Use Map 
+        .form-group
+          offset-md-2.col-md-8.p-1
+            button.btn.btn-primary
+              i.fas.fa-plane
+              | Go 
+  
+  .card(style='background-color: #000') 
+  center <div id="map"  style="height:400px;margin-top: 00px;:both;"></div>
+
   script.
+      $("#depart").attr("placeholder", moment().format('Do MMMM YYYY')).val("").focus().blur();
+      $("#return").attr("placeholder", moment().day(+7).format('Do MMMM YYYY')).val("").focus().blur();
+      var pickerDepart = new Pikaday({
+          field: document.getElementById('depart'),
+          format: 'D MMM YYYY',
+          placeholder: "fdjnf",
+          onSelect: function() {
+              console.log(this.getMoment().format('Do MMMM YYYY'));
+          }
+      });
+      var pickerReturn = new Pikaday({
+          field: document.getElementById('return'),
+          format: 'D MMM YYYY',
+          onSelect: function() {
+              console.log(this.getMoment().format('Do MMMM YYYY'));
+          }
+      });
+    $(document).ready(function() { 
+      $( "#trips" ).hide();
+      $( "#map" ).hide();
+
+     });
+     function showmap(){
+      $( "#map" ).show();
+     }
       var rectangle;
       var rectangle2;
       var map;
@@ -106,16 +158,46 @@ block content
 
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuehQ2KPVZ3fVpvhzyVpEYI9QntDN5DOE&callback=initMap">
   </script>
-
-  .form-group
   .offset-md-2.col-md-8.p-1
   center
-    form(method='POST')
+    //form(method='POST')
       input(type='hidden', name='_csrf', value=_csrf)
-      .form-group
-          button.btn.btn-primary(type='submit')
-            i.fas.fa-plane
-            | Find Trips   
+    .form-group 
+    button.btn.btn-primary(onclick='showTrips()')
+        i.fas.fa-plane
+          |  Find Trips
+
+  #trips(style = "height:800px;margin-top:40px;")
+    h2 
+      center Loading Trips
+    <div class="sk-wandering-cubes" id="loading">
+      <div class="sk-cube sk-cube1"></div>
+      <div class="sk-cube sk-cube2"></div>
+    </div>
+    <pre></pre>
+    script.
+      function showTrips(){
+        $( "#trips" ).show();
+        $('html, body').animate({
+          scrollTop: $("#trips").offset().top- 80
+        }, 1000);
+        loadTrips();
+      }
+      function loadTrips(){
+          $.ajax({
+            url: 'https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?apikey=wMLyLilNGM38UGr6mtUxP8nhDrsc3atE&origin=MIA&destination=LON&departure_date=2018-12-25&number_of_results=5',
+            type: "GET",
+            dataType: "jsonp",
+            success: function (data) {
+                $( "#loading" ).hide();
+                $('pre').html(JSON.stringify(data, undefined, 2));
+                //alert(data);
+           }
+        });
+
+      }
+
+
 //-  
   .row
     .col-md-6

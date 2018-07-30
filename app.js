@@ -34,6 +34,8 @@ const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
+const tripsController = require('./controllers/trips');
+
 
 /**
  * API keys and Passport configuration.
@@ -117,12 +119,17 @@ app.use('/', express.static(path.join(__dirname, 'public'), { maxAge: 3155760000
 app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/popper.js/dist'), { maxAge: 31557600000 }));
 app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js'), { maxAge: 31557600000 }));
 app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/jquery/dist'), { maxAge: 31557600000 }));
+var jsdom = require('jsdom');
+const { JSDOM } = jsdom;
+const { window } = new JSDOM('<html></html>');
+var $ = require('jquery')(window);
 app.use('/webfonts', express.static(path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free/webfonts'), { maxAge: 31557600000 }));
 
 /**
  * Primary app routes.
  */
 app.get('/', homeController.index);
+app.get('/trips', tripsController.getTrips);
 app.post('/', homeController.postTrip);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
