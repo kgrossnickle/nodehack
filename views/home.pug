@@ -3,42 +3,39 @@ block content
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
-  .head-search(style="position:relative;top:0px;left:0px;margin-bottom:10px;padding-top:50px;width: 100vw;margin-left:calc(-50vw + 50%);background-image:url('img/sb2 (1).png');background-size:     cover; background-repeat:   no-repeat;background-position: center center;   display: flex;justify-content: center;align-items: center; ")
-    .search(style="background:rgba(0, 0, 0, .4);color:white;display: inline-block; border-radius: 25px;    padding: 15px;margin-top:10px;margin-bottom:5px; ")      
-      form( class="form-inline")
-        input(type='hidden', name='_csrf', value=_csrf)
-        .form-group.row
-          label(class='col-md-2 col-form-label font-weight-bold', for='From') From
-          .col-md-8
-            input.form-control( type="text" name="r16R71!" autocomplete="false" )
-        .form-group.row
-          label(class='col-md-2 col-form-label font-weight-bold', for='To' ) To
-          .col-md-8
-            input.form-control(type='text', name='r16R71', id='name', autocomplete="false")
-        .form-group.row
-          label(class='col-md-2 col-form-label font-weight-bold', for='Depart') Depart
-          .col-md-8
-            input.form-control(type='text', name='r16R71', id="depart", autocomplete="false")
-        .form-group.row
-          label(class='col-md-2 col-form-label font-weight-bold', for='Return') Return
-          .col-md-8
-            input.form-control(type='text', name='r16R71', id='return', autocomplete="false")
-        .form-group
-          offset-md-2.col-md-8.p-1
-            button.btn.btn-primary(id="showmapbutton" onclick="showmap()")
-              i.fas.fa-globe-americas
-              | Use Map 
-        .form-group
-          offset-md-2.col-md-8.p-1
-            button.btn.btn-primary
-              i.fas.fa-plane
-              | Go 
-  
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    head-search(id="mainDiv" style="position:relative;top:0px;left:0px;margin-bottom:2px;padding:50px;width: 100vw;margin-left:calc(-50vw + 50%);background-image:url('img/sb2 (1).png');background-size:     cover; background-repeat:   no-repeat;background-position: center center;   display: flex;justify-content: center;align-items: center; ")
+      .search(style="background:rgba(0, 0, 0, .4);color:white;display: inline-block; border-radius: 25px; width:80%;   padding: 15px;margin-top:10px;margin-bottom:5px;    justify-content: center;  ")     
+        form( style="margin-left:10%;" )
+          input(type='hidden', name='_csrf', value=_csrf)
+          .form-group.row
+            label(class='col-md-2 col-form-label font-weight-bold', for='From' style="width:90%;text-align:center;") From
+            .col-md-8
+              input.form-control( type="text" name="r16R71!" autocomplete="false" style="width:90%;text-align:center;" placeholder="From")
+          .form-group.row
+            label(class='col-md-2 col-form-label font-weight-bold', for='To' style="width:90%;text-align:center;" ) To
+            .col-md-8
+              input.form-control(type='text', name='r16R71', id='name', autocomplete="false" style="width:90%;text-align:center;" placeholder="To")
+          .form-group.row
+            label(class='col-md-2 col-form-label font-weight-bold', for='Depart' style="width:90%;text-align:center;") Depart
+            .col-md-8
+                input.form-control(type='text', name='r16R71', id="depart", autocomplete="false" style="width:90%;text-align:center;") 
+          .form-group.row
+            label(class='col-md-2 col-form-label font-weight-bold', for='Return' style="width:90%;text-align:center;") Return
+            .col-md-8
+                input.form-control(type='none', name='r16R71', id='return', autocomplete="false" style="width:90%;text-align:center;")
+        div(style="  text-align: center;margin-top:8px;")
+          button.btn.btn-lg.btn-primary(style="margin-right:5px;" onclick='showTrips()') Go 
+            i.fas.fa-plane
+          button.btn.btn-lg.btn-primary(id="showmapbutton" onclick="showmap()") Use Map 
+                i.fas.fa-globe-americas
   .card(style='background-color: #000') 
   center <div id="map"  style="height:400px;margin-top: 00px;:both;"></div>
 
   script.
+      var mapHidden = true;
       $("#depart").attr("placeholder", moment().format('Do MMMM YYYY')).val("").focus().blur();
       $("#return").attr("placeholder", moment().day(+7).format('Do MMMM YYYY')).val("").focus().blur();
       var pickerDepart = new Pikaday({
@@ -57,12 +54,30 @@ block content
           }
       });
     $(document).ready(function() { 
+      $.noConflict();
       $( "#trips" ).hide();
       $( "#map" ).hide();
-
+      $('#price_table').DataTable();
+      $("#price_table").hide();
      });
      function showmap(){
-      $( "#map" ).show();
+       if(mapHidden){
+        $( "#map" ).show();
+        $('html, body').animate({
+            scrollTop: $("#map").offset().top- 40
+          }, 1000);
+        $("#showmapbutton").html('Hide Map');
+        mapHidden = false;
+       }
+        else{
+          $( "#map" ).hide();
+          $('html, body').animate({
+            scrollTop: $("#trips").offset().top
+          }, 1000);
+          $("#showmapbutton").html('Hide Map');
+          mapHidden=true;
+        }
+
      }
       var rectangle;
       var rectangle2;
@@ -158,26 +173,37 @@ block content
 
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuehQ2KPVZ3fVpvhzyVpEYI9QntDN5DOE&callback=initMap">
   </script>
-  .offset-md-2.col-md-8.p-1
-  center
-    //form(method='POST')
-      input(type='hidden', name='_csrf', value=_csrf)
-    .form-group 
-    button.btn.btn-primary(onclick='showTrips()')
-        i.fas.fa-plane
-          |  Find Trips
 
   #trips(style = "height:800px;margin-top:40px;")
     h2 
-      center Loading Trips
+      center(id="loadTrips-Text") Loading Trips
     <div class="sk-wandering-cubes" id="loading">
-      <div class="sk-cube sk-cube1"></div>
-      <div class="sk-cube sk-cube2"></div>
+        <div class="sk-cube sk-cube1"></div>
+        <div class="sk-cube sk-cube2"></div>
     </div>
+    <table id="price_table" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Price</th>
+                <th>Airline(s)</th>
+                <th>Flight Time</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <!--tfoot>
+            <tr>
+                <th>Price</th>
+                <th>Airline(s)</th>
+                <th>Flight Time</th>
+            </tr>
+        </tfoot-->
+    </table>
     <pre></pre>
     script.
       function showTrips(){
         $( "#trips" ).show();
+        //$( "#mainDiv" ).hide();
         $('html, body').animate({
           scrollTop: $("#trips").offset().top- 80
         }, 1000);
@@ -185,38 +211,28 @@ block content
       }
       function loadTrips(){
           $.ajax({
-            url: 'https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?apikey=wMLyLilNGM38UGr6mtUxP8nhDrsc3atE&origin=MIA&destination=LON&departure_date=2018-12-25&number_of_results=5',
+            url: 'https://api.skypicker.com/flights?flyFrom=PRG&to=LGW&dateFrom=18/11/2018&dateTo=12/12/2018&partner=picky',
             type: "GET",
-            dataType: "jsonp",
+            dataType: "json",
             success: function (data) {
-                $( "#loading" ).hide();
-                $('pre').html(JSON.stringify(data, undefined, 2));
-                //alert(data);
+                showFlights(data);
            }
         });
 
       }
 
+      function showFlights(data){
+                $( "#loading" ).hide();
+                $('#loadTrips-Text').text("Flights")
+                for(var i =0;i<data.data.length;i++){
+                  var time = (data.data[i].duration.total/(60*60));
+                  time = time.toString().substring(0, 4)+" Hours";
+                  $('#price_table').DataTable().row.add([
+                    "$"+data.data[i].price, data.data[i].airlines, time
+                  ]).draw();
+                }
+                $("#price_table").show();
+                $('pre').html(JSON.stringify(data, undefined, 2));
+      }
 
-//-  
-  .row
-    .col-md-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-raised(href='#', role='button') View details »
-    .col-md-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-raised(href='#', role='button') View details »
-    .col-md-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-raised(href='#', role='button') View details »
-    .col-md-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-raised(href='#', role='button') View details »
+
