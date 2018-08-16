@@ -34,6 +34,7 @@
     "express-status-monitor": "^1.1.2",
     "express-validator": "^5.2.0",
     "fbgraph": "^1.4.4",
+    "fuse.js": "^3.2.1",
     "instagram-node": "^0.5.8",
     "jquery": "^3.3.1",
     "jsdom": "^11.12.0",

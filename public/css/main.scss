@@ -11,6 +11,38 @@
 @import "themes/default/default";
 
 @import url("http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700");
+@font-face {
+    font-family: 'walkway_semiboldregular';
+    src: url('fonts/awalkway_semibold-webfont.woff2') format('woff2'),
+         url('fonts/awalkway_semibold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'aktivgrotesk_bd-webfont';
+    src: url('fonts/aktivgrotesk_bd-webfont.woff2') format('woff2'),
+         url('fonts/aktivgrotesk_bd-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'walkway_black-webfont';
+    src: url('fonts/walkway_black-webfont.woff2') format('woff2'),
+         url('fonts/walkway_black-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'montserrat-regular-webfont';
+    src: url('fonts/montserrat-regular-webfont.woff2') format('woff2'),
+         url('fonts/montserrat-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
 
 html {
   position: relative;
@@ -18,7 +50,8 @@ html {
 }
 
 body {
-  padding-top: 50px;
+  font-family: 'montserrat-regular-webfont','aktivgrotesk_bd-webfont';
+  //padding-top: 50px;
   margin-bottom: 75px;
   font-size: 14px;
 }
@@ -56,12 +89,14 @@ textarea {
 }
 
 .navbar{
+  font-family: 'walkway_semiboldregular';
   padding: 0px;
   margin-bottom: 20px;
   display: block;
 }
 
 .navbar-brand{
+  font-family: 'walkway_black-webfont';
   font-size: 18px;
   float: left;
   margin-left: 15px;

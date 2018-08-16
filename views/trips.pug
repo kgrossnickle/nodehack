@@ -1,144 +1,519 @@
 extends layout
-
 block content
-  //-style.
-    .sk-fading-circle {
-      margin: 40px auto;
-      width: 40px;
-      height: 40px;
-      position: relative; }
-      .sk-fading-circle .sk-circle {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0;
-        top: 0; }
-      .sk-fading-circle .sk-circle:before {
-        content: '';
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js"></script>
+  <script src="https://screenfeedcontent.blob.core.windows.net/html/airports.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    style.
+
+      .control-label {
         display: block;
-        margin: 0 auto;
-        width: 15%;
-        height: 15%;
-        background-color: #333;
-        border-radius: 100%;
-        -webkit-animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;
-                animation: sk-circleFadeDelay 1.2s infinite ease-in-out both; }
-      .sk-fading-circle .sk-circle2 {
-        -webkit-transform: rotate(30deg);
-            -ms-transform: rotate(30deg);
-                transform: rotate(30deg); }
-      .sk-fading-circle .sk-circle3 {
-        -webkit-transform: rotate(60deg);
-            -ms-transform: rotate(60deg);
-                transform: rotate(60deg); }
-      .sk-fading-circle .sk-circle4 {
-        -webkit-transform: rotate(90deg);
-            -ms-transform: rotate(90deg);
-                transform: rotate(90deg); }
-      .sk-fading-circle .sk-circle5 {
-        -webkit-transform: rotate(120deg);
-            -ms-transform: rotate(120deg);
-                transform: rotate(120deg); }
-      .sk-fading-circle .sk-circle6 {
-        -webkit-transform: rotate(150deg);
-            -ms-transform: rotate(150deg);
-                transform: rotate(150deg); }
-      .sk-fading-circle .sk-circle7 {
-        -webkit-transform: rotate(180deg);
-            -ms-transform: rotate(180deg);
-                transform: rotate(180deg); }
-      .sk-fading-circle .sk-circle8 {
-        -webkit-transform: rotate(210deg);
-            -ms-transform: rotate(210deg);
-                transform: rotate(210deg); }
-      .sk-fading-circle .sk-circle9 {
-        -webkit-transform: rotate(240deg);
-            -ms-transform: rotate(240deg);
-                transform: rotate(240deg); }
-      .sk-fading-circle .sk-circle10 {
-        -webkit-transform: rotate(270deg);
-            -ms-transform: rotate(270deg);
-                transform: rotate(270deg); }
-      .sk-fading-circle .sk-circle11 {
-        -webkit-transform: rotate(300deg);
-            -ms-transform: rotate(300deg);
-                transform: rotate(300deg); }
-      .sk-fading-circle .sk-circle12 {
-        -webkit-transform: rotate(330deg);
-            -ms-transform: rotate(330deg);
-                transform: rotate(330deg); }
-      .sk-fading-circle .sk-circle2:before {
-        -webkit-animation-delay: -1.1s;
-                animation-delay: -1.1s; }
-      .sk-fading-circle .sk-circle3:before {
-        -webkit-animation-delay: -1s;
-                animation-delay: -1s; }
-      .sk-fading-circle .sk-circle4:before {
-        -webkit-animation-delay: -0.9s;
-                animation-delay: -0.9s; }
-      .sk-fading-circle .sk-circle5:before {
-        -webkit-animation-delay: -0.8s;
-                animation-delay: -0.8s; }
-      .sk-fading-circle .sk-circle6:before {
-        -webkit-animation-delay: -0.7s;
-                animation-delay: -0.7s; }
-      .sk-fading-circle .sk-circle7:before {
-        -webkit-animation-delay: -0.6s;
-                animation-delay: -0.6s; }
-      .sk-fading-circle .sk-circle8:before {
-        -webkit-animation-delay: -0.5s;
-                animation-delay: -0.5s; }
-      .sk-fading-circle .sk-circle9:before {
-        -webkit-animation-delay: -0.4s;
-                animation-delay: -0.4s; }
-      .sk-fading-circle .sk-circle10:before {
-        -webkit-animation-delay: -0.3s;
-                animation-delay: -0.3s; }
-      .sk-fading-circle .sk-circle11:before {
-        -webkit-animation-delay: -0.2s;
-                animation-delay: -0.2s; }
-      .sk-fading-circle .sk-circle12:before {
-        -webkit-animation-delay: -0.1s;
-                animation-delay: -0.1s; }
-    @-webkit-keyframes sk-circleFadeDelay {
-      0%, 39%, 100% {
-        opacity: 0; }
-      40% {
-        opacity: 1; } }
-    @keyframes sk-circleFadeDelay {
-      0%, 39%, 100% {
-        opacity: 0; }
-      40% {
-        opacity: 1; } }
-  .container
+      }
+
+      .autocomplete-wrapper {
+        position: relative;
+        display:inline-block;
+        input {
+          width: 100%;
+        }
+      }
+      .autocomplete-results {
+        position: absolute;
+        background: white;
+        z-index: 1;
+        top: 100%;
+        left: 0;
+        font-size: 13px;
+        border: solid 1px #ddd;
+        border-top-width: 0;
+        border-bottom-color: #ccc;
+        box-shadow: 
+          0 5px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .autocomplete-result {
+        padding: 12px 15px;
+        border-bottom: solid 1px #eee;
+        cursor: pointer;
+      }
+
+      .autocomplete-result:last-child {
+        border-bottom-width: 0;
+      }
+
+      .autocomplete-location {
+        opacity: .8;
+        font-size: smaller;
+      }
+
+          $iPlus: 0;
+          @for $i from 0 through 7 {
+            $iPlus: $i + 1;
+            .autocomplete-results[data-highlight='#{$i}'] > :nth-child(#{$iPlus}) {
+              color: white;
+              background: #26C9FF;
+              border-bottom-color: #26C9FF;
+              outline: solid 1px darken(#26C9FF, 10%);
+            }
+          }
+
+      .table td{
+        vertical-align:middle;
+        text-align:center;
+        }
+      //- input.form-control::placeholder {
+      //-     color: white;
+      //-     opacity: 1; /* Firefox */
+      //- }
+
+      //- input.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+      //-    color: red;
+      //- }
+
+      //- input.form-control::-ms-input-placeholder { /* Microsoft Edge */
+      //-    color: red;
+      //- }
+    head-search(id="mainDiv" style="position:relative;top:0px;left:0px;margin-bottom:2px;padding:50px;width: 100vw;margin-left:calc(-50vw + 50%);height:calc(100vh - 100px);background-image:url('img/bg-sun.jpg');background-size: cover; background-repeat:   no-repeat;background-position: center center;   display: block;justify-content: center;align-items: center;")
+      div(style = "text-align:center;")
+          h1 
+            center(style = "color:white;    text-shadow: 4px 4px 4px #000000;font-size:1.5em;") Find Your Way
+      .search(style="background:rgba(23,42,54,0.8);display: inline-block; border-radius: 10px; width:100%;   padding: 25px;  justify-content: center;margin: 0 auto;     margin-top: 2%;")     
+        form( class="form-inline" style="display:table;margin:0 auto;")
+          input(type='hidden', name='_csrf', value=_csrf)
+
+          input.form-control(class="autocomplete-airport" type="text" name="r16R71!" autocomplete="false" style="text-align:center;height:15vh;" id="From" placeholder="From" )
+          input.form-control(class="autocomplete-airport" type='text', name='r16R71', autocomplete="false" style="text-align:center;height:15vh;" id="To" placeholder="To")
+          input.form-control(type='select', name='r16R71', id="depart", autocomplete="false" style="color:#FFFFFF;text-align:center;height:15vh;background-color:#38b6aa;")
+          input.form-control(type='none', name='r16R71', id='return', autocomplete="false" style="text-align:center;height:15vh;color:#FFFFFF;background-color:#38b6aa;")
+          //div(style="  text-align: center;")
+            button.btn.btn-sm.btn-light(id="showmapbutton" onclick="showmap()" style="  text-align: center;height:15vh;") Use Map 
+              i.fas.fa-globe-americas
+          div(style="  width:100%; text-align: center;")       
+            button.btn.btn-lg.btn-primary(type="button" style="width:90%;height:15vh;padding-left:40px;padding-right:40px;display:table;margin: 0 auto;background-color:#007496;border-color:#007496;" onclick='showTrips()') Go 
+  .card(style='background-color: #000') 
+  center <div id="map"  style="height:400px;margin-top: 00px;:both;"></div>
+  <!--div class="form-group">
+  <label class="control-label">Enter an Airport</label>
+  <input id="autocomplete" class="autocomplete-airport" type="text" />
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Enter something else</label>
+    <input id="autocomplete2" class="autocomplete-airport" type="text" />
+  </div-->
+  script.
+      var ddate;
+      var rdate;
+      var mapHidden = true;
+      //$("#depart").attr("placeholder", moment().format('Do MMMM YYYY')).val("").focus().blur();
+      //$("#return").attr("placeholder", moment().day(+7).format('Do MMMM YYYY')).val("").focus().blur();
+      $('#depart').val("Depart");
+      $('#return').val("Return");
+
+
+      var options = {
+        shouldSort: true,
+        threshold: 0.4,
+        maxPatternLength: 32,
+        keys: [{
+          name: 'iata',
+          weight: 0.5
+        }, {
+          name: 'name',
+          weight: 0.3
+        }, {
+          name: 'city',
+          weight: 0.2
+        }]
+      };
+
+      var fuse = new Fuse(airports, options)
+
+      $('.autocomplete-airport').each(function() {
+        var ac = $(this);
+        
+         ac.on('click', function(e) {
+          e.stopPropagation();
+        })
+        .on('focus keyup', search)
+        .on('keydown', onKeyDown);
+        
+        var wrap = $('<div>')
+          .addClass('autocomplete-wrapper')
+          .insertBefore(ac)
+          .append(ac);
+        
+          var list = $('<div>')
+            .addClass('autocomplete-results troll')
+            .on('click', '.autocomplete-result', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              selectIndex($(this).data('index'), ac);
+          })
+          .appendTo(wrap);
+        
+       var counter = 0;
+        counter++;
+         $(".autocomplete-wrapper").addClass("_" + counter);
+        
+        // $(".autocomplete-airport").click(function(){
+      $(".autocomplete-airport").focus(function(){
+          $(ac ).toggleClass("yes");
+        // $(this).addClass(".autoyes");
+        $(".autocomplete-result").closest(".autocomplete-results").addClass("in");
+      });
+
+      });
+
+      $(document)
+        .on('mouseover', '.autocomplete-result', function(e) {
+          var index = parseInt($(this).data('index'), 10);
+          if (!isNaN(index)) {
+            $(this).attr('data-highlight', index);
+          }
+        })
+        .on('click', clearResults);
+
+      function clearResults() {
+        results = [];
+        numResults = 0;
+        $('.autocomplete-results').empty();
+      }
+
+      function selectIndex(index, autoinput) {
+        if (results.length >= index + 1) {
+          autoinput.val(results[index].iata + " - " + results[index].name + " - " + results[index].city);
+          clearResults();
+        }  
+      }
+
+      var results = [];
+      var numResults = 0;
+      var selectedIndex = -1;
+
+      function search(e) {
+        if (e.which === 38 || e.which === 13 || e.which === 40) {
+          return;
+        }
+        var ac = $(e.target);
+        var list = ac.next();
+        if (ac.val().length > 0) {
+          results = _.take(fuse.search(ac.val()), 7);
+          numResults = results.length;
+          
+          var divs = results.map(function(r, i) {
+              return '<div class="autocomplete-result" data-index="'+ i +'">'
+                   + '<div><b>'+ r.iata +'</b> - '+ r.name +'</div>'
+                   + '<div class="autocomplete-location">'+ r.city +', '+ r.country +'</div>'
+                   + '</div>';
+           });
+          
+          selectedIndex = -1;
+          list.html(divs.join(''))
+            .attr('data-highlight', selectedIndex);
+
+        } else {
+          numResults = 0;
+          list.empty();
+        }
+      }
+
+      function onKeyDown(e) {
+        var ac = $(e.currentTarget);
+        var list = ac.next();
+        switch(e.which) {
+          case 38: // up
+            selectedIndex--;
+            if (selectedIndex <= -1) {
+              selectedIndex = -1;
+            }
+            list.attr('data-highlight', selectedIndex);
+            break;
+          case 13: // enter
+            selectIndex(selectedIndex, ac);
+            break;
+          case 9: // enter
+            selectIndex(selectedIndex, ac);
+            e.stopPropagation();
+            return;
+          case 40: // down
+            selectedIndex++;
+            if (selectedIndex >= numResults) {
+              selectedIndex = numResults-1;
+            }
+            list.attr('data-highlight', selectedIndex);
+            break;
+
+          default: return; // exit this handler for other keys
+        }
+        e.stopPropagation();
+        e.preventDefault(); // prevent the default action (scroll / move caret)
+      }
+
+      var counter = 0;
+      $(".autocomplete-wrapper").each(function () {
+          counter++;
+          var self = $(this);
+          self.addClass("row_" + counter);
+          var tdCounter = 0;
+          self.find('.autocomplete-results').each(function (index) {
+            $( ".autocomplete-wrapper" ).find( ".autocomplete-results" ).addClass("intro");
+          //     tdCounter++;
+          //     if (index == 0) {
+          //         $(this).css({ "margin-left": 30,'float': 'left'});
+          //     }
+          //     $(this).addClass("row_" + counter + tdCounter);
+          //   // $("button").click(function(){
+          // $(this).addClass("intro");
+      // });
+          });
+      });
+      var pickerDepart = new Pikaday({
+          field: document.getElementById('depart'),
+          format: 'MMMM DD YYYY',
+          onSelect: function() {
+               ddate = this.getMoment().format("DD/MM/YYYY");
+          }
+      });
+      var pickerReturn = new Pikaday({
+          field: document.getElementById('return'),
+          format: 'MMMM DD YYYY',
+          onSelect: function() {
+              rdate = this.getMoment().format("DD/MM/YYYY");
+          }
+      });
+    $(document).ready(function() { 
+      $.noConflict();
+      $( "#trips" ).hide();
+      $( "#map" ).hide();
+      $('#price_table').DataTable();
+      $("#price_table").hide();
+     });
+     function showmap(){
+       if(mapHidden){
+        $( "#map" ).show();
+        $('html, body').animate({
+            scrollTop: $("#map").offset().top- 40
+          }, 1000);
+        $("#showmapbutton").html('Hide Map');
+        mapHidden = false;
+       }
+        else{
+          $( "#map" ).hide();
+          $('html, body').animate({
+            scrollTop: $("#trips").offset().top
+          }, 1000);
+          $("#showmapbutton").html('Hide Map');
+          mapHidden=true;
+        }
+
+     }
+      var rectangle;
+      var rectangle2;
+      var map;
+      var infoWindow;
+      var infoWindow2;
+
+      function initMap() {
+        var bounds = {
+          north: 28.4524,
+          south: 26.043,
+          east:   -79.606,
+          west:  -81.99
+        };
+        var bounds2 = {
+          north: 46.8000,
+          south: 35.44875340,
+          east:  -100.54058,
+          west:  -116.20466
+        };
+
+        // Define the rectangle and set its editable property to true.
+        // Define an info window on the map.
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 38.610988647725, lng: -92.4499},
+          zoom: 4
+        });
+
+        // Define the rectangle and set its editable property to true.
+        rectangle = new google.maps.Rectangle({
+          strokeColor: '#2365ff',
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: '#2365ff',
+          fillOpacity: 0.35,
+          bounds: bounds,
+          editable: true,
+          draggable: true
+        });
+        rectangle2 = new google.maps.Rectangle({
+          strokeColor: '#FF0000',
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: '#FF0000',
+          fillOpacity: 0.35,
+          bounds: bounds2,
+          editable: true,
+          draggable: true
+        });
+
+        rectangle.setMap(map);
+
+        // Add an event listener on the rectangle.
+        rectangle.addListener('bounds_changed', showNewRect);
+        rectangle2.setMap(map);
+
+        // Add an event listener on the rectangle.
+        rectangle2.addListener('bounds_changed', showNewRect2);
+        // Define an info window on the map.
+        infoWindow = new google.maps.InfoWindow();
+        infoWindow2 = new google.maps.InfoWindow();
+      }
+      // Show the new coordinates for the rectangle in an info window.
+
+      /** @this {google.maps.Rectangle} */
+      function showNewRect(event) {
+        var ne = rectangle.getBounds().getNorthEast();
+        var sw = rectangle.getBounds().getSouthWest();
+
+        var contentString = '<b>Rectangle moved.</b><br>' +
+            'New north-east corner: ' + ne.lat() + ', ' + ne.lng() + '<br>' +
+            'New south-west corner: ' + sw.lat() + ', ' + sw.lng();
+
+        // Set the info window's content and position.
+        infoWindow.setContent(contentString);
+        infoWindow.setPosition(ne);
+
+        infoWindow.open(map);
+      }
+      function showNewRect2(event) {
+        var ne2 = rectangle2.getBounds().getNorthEast();
+        var sw2 = rectangle2.getBounds().getSouthWest();
+
+        var contentString2 = '<b>Rectangle moved.</b><br>' +
+            'New north-east corner: ' + ne2.lat() + ', ' + ne2.lng() + '<br>' +
+            'New south-west corner: ' + sw2.lat() + ', ' + sw2.lng();
+        // Set the info window's content and position.
+        infoWindow2.setContent(contentString2);
+        infoWindow2.setPosition(ne2);
+
+        infoWindow2.open(map);
+      }
+
+  <!--script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuehQ2KPVZ3fVpvhzyVpEYI9QntDN5DOE&callback=initMap">
+  </script-->
+
+  #trips(style = "height:800px;")
     h2 
-      center Loading Trips
-      <div class="sk-wandering-cubes">
+      center(id="loadTrips-Text") Loading Trips
+    <div class="sk-wandering-cubes" id="loading">
         <div class="sk-cube sk-cube1"></div>
         <div class="sk-cube sk-cube2"></div>
-      </div>
- 
+    </div>
+    <table id="price_table" class="table table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Price</th>
+                <th>Flight Info</th>
+                <th>Flight Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div style="display:inline-block;height:100%;width:100%;align-items:center;text-align:center;vertical-align:middle;">  50$
+                    </div>
+                </td>
+                <td>
+                  <div style='display:inline-block;height:100%;width:100%;align-items:center;text-align:center;margin-top: 12px;'>
+                    <p> <img style='float: center;vertical-align: middle;height:100%;' alt='Spirit Airlines' src='//images.kiwi.com/airlines/32x32/NK.png' srcset='//images.kiwi.com/airlines/64x64/NK.png 2x'> Spirit 9:50 PM - 12:50 PM <br> Tuesday Sep 10th</p>
+                  </div>
+                </td>
+                <td>3 hours</td>
+            </tr>
+            <tr>
+                <td>70$</td>
+                <td>Air France</td>
+                <td>10 hours</td>
+            </tr>
+        </tbody>
+        <!--tfoot>
+            <tr>
+                <th>Price</th>
+                <th>Airline(s)</th>
+                <th>Flight Time</th>
+            </tr>
+        </tfoot-->
+    </table>
+    <pre></pre>
+    script.
+      function showTrips(){
+        $( "#trips" ).show();
+        //$( "#mainDiv" ).hide();
+        $('html, body').animate({
+          scrollTop: $("#trips").offset().top- 80
+        }, 1000);
+        var to = $("#To").val().substring(0,3);
+        var from = $("#From").val().substring(0,3);
+        loadTrips(to,from,ddate,rdate);
+      }
+      function loadTrips(from,to,ddate,rdate){
+          //rdate is wrong, its actually just one way date window
+          $.ajax({
+            url: 'https://api.skypicker.com/flights?flyFrom='+from+'&to='+to+'&dateFrom='+ddate+'&dateTo='+rdate+'&partner=picky', 
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                $( "#price_table" ).show();
+                showFlights(data);
+           }
+        });
+
+      }
+
+      function showFlights(data){
+                $( "#loading" ).hide();
+                $('#loadTrips-Text').text("Flights")
+                for(var i =0;i<data.data.length;i++){
+                  var dur = (data.data[i].duration.total/(60*60));
+                  dur = dur.toString().substring(0, 4)+" Hours";
+                  var date = new Date(Number(data.data[i].dTime)*1000);
+                  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                  var year = date.getFullYear();
+                  var month = months[date.getMonth()];
+                  var day = date.getDate();
+                  // Hours part from the timestamp
+                  var hours = date.getHours();
+                  // Minutes part from the timestamp
+                  var minutes = "0" + date.getMinutes();
+                  // Will display time in 10:30:23 format
+                  var ddate= day + ' ' + month + ' ' + year;
+                  var dtime = hours + ':' + minutes.substr(-2);
+                  date = new Date(data.data[i].aTime*1000);
+                  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                  year = date.getFullYear();
+                  month = months[date.getMonth()];
+                  day = date.getDate();
+                  // Hours part from the timestamp
+                  hours = date.getHours();
+                  // Minutes part from the timestamp
+                  minutes = "0" + date.getMinutes();
+                  // Seconds part from the timestamp
+                  seconds = "0" + date.getSeconds();
+                  var adate= day + ' ' + month + ' ' + year;
+                  // Will display time in 10:30:23 format
+                  var atime = hours + ':' + minutes.substr(-2);
+                  $('#price_table').DataTable().row.add([
+                    "$"+data.data[i].price, "<div style='display:inline-block;height:100%;width:100%;align-items:center;text-align:center;margin-top: 12px;'><p><img style='float: center;vertical-align: middle;height:100%;' alt='Spirit Airlines' src='//images.kiwi.com/airlines/32x32/"+data.data[i].airlines+".png' srcset='//images.kiwi.com/airlines/64x64/"+data.data[i].airlines+".png 2x'> "+dtime+" - "+atime+"<br>"+ddate+"</p>", dur
+                  ]).draw();
+                }
+                $("#price_table").show();
+                $('pre').html(JSON.stringify(data, undefined, 2));
+      }
 
 
-//-  
-  .row
-    .col-md-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-raised(href='#', role='button') View details »
-    .col-md-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-raised(href='#', role='button') View details »
-    .col-md-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-raised(href='#', role='button') View details »
-    .col-md-6
-      h2 Heading
-      p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-      p
-        a.btn.btn-raised(href='#', role='button') View details »

@@ -11,7 +11,7 @@
 
 
 // = require('jquery');//(require("jsdom").jsdom().parentWindow);
-
+var fuse = require("fuse.js");
 exports.index = (req, res) => {
   res.render('home', {
     title: 'Home'
