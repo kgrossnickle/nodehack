@@ -10,3 +10,22 @@ exports.getTrips = (req, res) => {
     unknownUser,
   });
 };
+
+exports.postTrip = (req, res) => {
+	res.redirect('/contact');
+
+  //   res.render('home', {
+  //   title: 'Finding Trips',
+  //   unknownUser,
+  // });
+
+  // const trip = new Trip({
+  //   departDate: req.body.departDate
+  //    });
+
+  //   trip.save((err) => {
+  //     if (err) { return next(err); }
+  //       res.redirect('/contact');
+  //   });
+ 
+};

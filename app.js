@@ -131,7 +131,8 @@ app.use('/webfonts', express.static(path.join(__dirname, 'node_modules/@fortawes
  */
 app.get('/', homeController.index);
 app.get('/trips', tripsController.getTrips);
-app.post('/', homeController.postTrip);
+app.post('/trips', tripsController.postTrip);
+//app.post('/', homeController.postTrip);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);
