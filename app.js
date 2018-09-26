@@ -133,7 +133,7 @@ app.get('/', homeController.index);
 app.get('/trips', tripsController.getTrips);
 app.get('/trips/:tripID', tripsController.getTripwithID);
 app.post('/trips', tripsController.postTrip);
-//app.post('/', homeController.postTrip);
+app.post('/', homeController.postTrip);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);

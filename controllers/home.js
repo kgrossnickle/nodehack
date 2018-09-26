@@ -19,5 +19,6 @@ exports.index = (req, res) => {
 };
 
 exports.postTrip = (req, res) => {
+	    console.log('Body- ' + JSON.stringify(req.body));
 
 };

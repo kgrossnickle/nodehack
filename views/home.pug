@@ -93,7 +93,7 @@ block content
           select(style="display:inline-block;" id="minNights" onchange="minmaxNights(id)")
           a(style="display:inline-block;color:white;margin-right:15px;margin-left:15px;padding-bottom:5px;") Max Nights at Destination
           select(style="display:inline-block;" id="maxNights" onchange="minmaxNights(id)")
-        form( class="form-inline" style="display:table;margin:0 auto;")
+        form( class="form-inline" action="/" method="post" style="display:table;margin:0 auto;")
           input(type='hidden', name='_csrf', value=_csrf)
 
           input.form-control(class="autocomplete-airport" type="text" name="r16R71!" autocomplete="false" style="text-align:center;height:15vh;background-color: #f4f6f8;color: #57626c;" id="From" placeholder="From" )
@@ -103,8 +103,8 @@ block content
           //div(style="  text-align: center;")
             button.btn.btn-sm.btn-light(id="showmapbutton" onclick="showmap()" style="  text-align: center;height:15vh;") Use Map 
               i.fas.fa-globe-americas
-          div(style="  width:100%; text-align: center;")       
-            button.btn.btn-lg.btn-primary(type="button" style="width:90%;height:15vh;padding-left:40px;padding-right:40px;display:table;margin: 0 auto;background-color:#168eea;border-color:#007496;" onclick='showTrips()') Go 
+              div(style="  width:100%; text-align: center;")       
+          button.btn.btn-lg.btn-primary(type="submit" style="width:90%;height:15vh;padding-left:40px;padding-right:40px;display:table;margin: 0 auto;background-color:#168eea;border-color:#007496;" onclick='showTrips()') Go 
 
     div(style = "text-align:center;   width:100%;margin-bottom:80px;")
         div(style="  display: inline-block;margin: 0px auto;margin:30px;")
