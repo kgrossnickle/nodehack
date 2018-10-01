@@ -78,10 +78,7 @@ block content
       //- input.form-control::-ms-input-placeholder { /* Microsoft Edge */
       //-    color: red;
       //- }
-    head-search(id="mainDiv" style="position:relative;top:0px;left:0px;padding-left:50px;padding-right:50px;padding-top:50px;width: 100vw;margin-left:calc(-50vw + 50%);/*height:calc(100vh - 100px);background-image:url('img/bg-sun.jpg');*/background-size: cover; background-repeat:   no-repeat;background-position: center center;   display: block;justify-content: center;align-items: center;")
-      div(style = "text-align:center;")
-          h1 
-            center(style="font-family: 'walkway_semiboldregular';") <span style="font-family: 'walkway_black-webfont';color:#168eea;" >WokeWays.com </span>  Flexible Travel for Unbeatable Savings
+    head-search(id="mainDiv" style="position:relative;top:0px;left:0px;padding-left:50px;padding-right:50px;padding-top:0px;width: 100vw;margin-left:calc(-50vw + 50%);/*height:calc(100vh - 100px);background-image:url('img/bg-sun.jpg');*/background-size: cover; background-repeat:   no-repeat;background-position: center center;   display: block;justify-content: center;align-items: center;")
       .search(style="background-color: rgba(22, 93, 234, 0.56);display: inline-block; border-radius: 10px; width:100%;   padding: 25px;padding-top:5px;  justify-content: center;margin: 0 auto;")  
         //button.btn.btn-sm.btn-primary(style="display:inline-block;margin: 0 auto;margin-left:23px;margin-bottom:15px;color:#c9d4d2;margin-top:5px;margin-right:4px;background-color:#38b6aa;border-color:#007496;") One Way
         //button.btn.btn-sm.btn-primary( id="roundtrip" style="text-decoration:underline;text-decoration-color:#007496;display:inline-block;margin-bottom:15px;margin-top:5px;margin-right:4px;background-color:#38b6aa;border-color:#007496;") Round Trip
@@ -96,61 +93,18 @@ block content
         form( class="form-inline" style="display:table;margin:0 auto;")
           input(type='hidden', name='_csrf', value=_csrf)
 
-          input.form-control(class="autocomplete-airport" type="text" name="r16R71!" autocomplete="false" style="text-align:center;height:15vh;background-color: #f4f6f8;color: #57626c;" id="From" placeholder="From" )
-          input.form-control(class="autocomplete-airport" type='text', name='r16R71', autocomplete="false" style="text-align:center;height:15vh;background-color: #f4f6f8;color: #57626c;" id="To" placeholder="To")
-          input.form-control(type='select', name='r16R71', id="depart", autocomplete="false" style="color:#FFFFFF;text-align:center;height:15vh;background-color:#16eadc;//#38b6aa;")
-          input.form-control(type='none', name='r16R71', id='return', autocomplete="false" style="text-align:center;height:15vh;color:#FFFFFF;background-color:#16eadc;//#38b6aa;")
-          //div(style="  text-align: center;")
-            button.btn.btn-sm.btn-light(id="showmapbutton" onclick="showmap()" style="  text-align: center;height:15vh;") Use Map 
-              i.fas.fa-globe-americas
-          div(style="  width:100%; text-align: center;")       
-            button.btn.btn-lg.btn-primary(type="button" style="width:90%;height:15vh;padding-left:40px;padding-right:40px;display:table;margin: 0 auto;background-color:#168eea;border-color:#007496;" onclick='showTrips()') Go 
+          input.form-control(class="autocomplete-airport" type="text" name="r16R71!" autocomplete="false" style="text-align:center;height:8vh;background-color: #f4f6f8;color: #57626c;" id="From" value=flyFrom )
+          input.form-control(class="autocomplete-airport" type='text', name='r16R71', autocomplete="false" style="text-align:center;height:8vh;background-color: #f4f6f8;color: #57626c;" id="To" placeholder="To")
+          input.form-control(type='select', name='r16R71', id="depart", autocomplete="false" style="color:#FFFFFF;text-align:center;height:8vh;background-color:#16eadc;//#38b6aa;")
+          input.form-control(type='none', name='r16R71', id='return', autocomplete="false" style="text-align:center;height:8vh;color:#FFFFFF;background-color:#16eadc;//#38b6aa;")
+          button.btn.btn-lg.btn-primary(type="button" style="height:8vh;background-color:#168eea;border-color:#007496;margin: 0 auto;text-align:center" onclick='showTrips()')
+            i.fas.fa-search.fa-sm
 
-    div(style = "text-align:center;   width:100%;margin-bottom:80px;")
-        div(style="  display: inline-block;margin: 0px auto;margin:30px;")
-          <img src="/img/symbols/cpu2.png" height="110px" alt="Expedia logo vector" style="margin-right:30px;"/>
-          <img src="/img/symbols/arrow.png" height="50px" alt="Expedia logo vector" style="margin-right:30px;"/>
-          <img src="/img/symbols/plane.png" height="85px" alt="Expedia logo vector" style="margin-right:30px;"/>
-          <img src="/img/symbols/arrow.png" height="50px" alt="Expedia logo vector" style="margin-right:30px;"/>
-          <img src="/img/symbols/vacation.png" height="105px" alt="Expedia logo vector" />
-        h1 Let A.I. Find Travel Steals For You
-        button.btn.btn-primary
-            |Learn More
-        button.btn.btn-primary(style="margin-left:10px;")
-            |Find Me Flights
     .card(style='background-color: #000') 
     //center <div id="map"  style="height:400px;margin-top: 00px;:both;"></div>
-    <!--div class="form-group">
-    <label class="control-label">Enter an Airport</label>
-    <input id="autocomplete" class="autocomplete-airport" type="text" />
-    </div>
 
-    <div class="form-group">
-      <label class="control-label">Enter something else</label>
-      <input id="autocomplete2" class="autocomplete-airport" type="text" />
-    </div-->
-
-    head-search(id="mainDiv" style="position:relative;top:0px;left:0px;margin-bottom:2px;padding-right:50px;padding-left:50px;padding:20px;width: 100vw;margin-left:calc(-50vw + 50%);background-color:#007bff;background-size: cover; background-repeat:   no-repeat;background-position: center center; text-align:center;    display: inline-grid;justify-content: center;")
-      h2(style="font-family:'walkway_semiboldregular';color:white;") DARE TO COMPARE AGAINST:
-      div(style="  display: inline-block;margin: 0px auto;")
-        <img src="/img/logos/expedia.png" height="50px" alt="Expedia logo vector" />
-        <img src="/img/logos/kayak.png" height="30px" alt="Expedia logo vector" />
-        <img src="/img/logos/google.png" height="40px" alt="Expedia logo vector" />
-        <img src="/img/logos/priceline.png" height="35px" alt="Expedia logo vector" />
-        <img src="/img/logos/skyscanner.png" height="35px" alt="Expedia logo vector" />
-
-  //form(method='POST')
-    input(type='hidden', name='_csrf', value=_csrf)
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right(for='departDate') Date
-      .col-md-7
-        input.form-control(type='departDate', name='departDate', id='departDate', placeholder='Depart Date', autofocus, required)
-    .form-group
-      .offset-sm-3.col-md-7.pl-2
-        button.col-md-3.btn.btn-primary(type='submit')
-          i.far.fa-user.fa-sm
-          | Save Trip?
   script.
+      //alert("#{flyFrom}");
       var ddate;
       var rdate;
       var mapHidden = true;
@@ -355,101 +309,6 @@ block content
         }
 
      }
-      var rectangle;
-      var rectangle2;
-      var map;
-      var infoWindow;
-      var infoWindow2;
-
-      function initMap() {
-        var bounds = {
-          north: 28.4524,
-          south: 26.043,
-          east:   -79.606,
-          west:  -81.99
-        };
-        var bounds2 = {
-          north: 46.8000,
-          south: 35.44875340,
-          east:  -100.54058,
-          west:  -116.20466
-        };
-
-        // Define the rectangle and set its editable property to true.
-        // Define an info window on the map.
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 38.610988647725, lng: -92.4499},
-          zoom: 4
-        });
-
-        // Define the rectangle and set its editable property to true.
-        rectangle = new google.maps.Rectangle({
-          strokeColor: '#2365ff',
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: '#2365ff',
-          fillOpacity: 0.35,
-          bounds: bounds,
-          editable: true,
-          draggable: true
-        });
-        rectangle2 = new google.maps.Rectangle({
-          strokeColor: '#FF0000',
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: '#FF0000',
-          fillOpacity: 0.35,
-          bounds: bounds2,
-          editable: true,
-          draggable: true
-        });
-
-        rectangle.setMap(map);
-
-        // Add an event listener on the rectangle.
-        rectangle.addListener('bounds_changed', showNewRect);
-        rectangle2.setMap(map);
-
-        // Add an event listener on the rectangle.
-        rectangle2.addListener('bounds_changed', showNewRect2);
-        // Define an info window on the map.
-        infoWindow = new google.maps.InfoWindow();
-        infoWindow2 = new google.maps.InfoWindow();
-      }
-      // Show the new coordinates for the rectangle in an info window.
-
-      /** @this {google.maps.Rectangle} */
-      function showNewRect(event) {
-        var ne = rectangle.getBounds().getNorthEast();
-        var sw = rectangle.getBounds().getSouthWest();
-
-        var contentString = '<b>Rectangle moved.</b><br>' +
-            'New north-east corner: ' + ne.lat() + ', ' + ne.lng() + '<br>' +
-            'New south-west corner: ' + sw.lat() + ', ' + sw.lng();
-
-        // Set the info window's content and position.
-        infoWindow.setContent(contentString);
-        infoWindow.setPosition(ne);
-
-        infoWindow.open(map);
-      }
-      function showNewRect2(event) {
-        var ne2 = rectangle2.getBounds().getNorthEast();
-        var sw2 = rectangle2.getBounds().getSouthWest();
-
-        var contentString2 = '<b>Rectangle moved.</b><br>' +
-            'New north-east corner: ' + ne2.lat() + ', ' + ne2.lng() + '<br>' +
-            'New south-west corner: ' + sw2.lat() + ', ' + sw2.lng();
-        // Set the info window's content and position.
-        infoWindow2.setContent(contentString2);
-        infoWindow2.setPosition(ne2);
-
-        infoWindow2.open(map);
-      }
-
-  <!--script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuehQ2KPVZ3fVpvhzyVpEYI9QntDN5DOE&callback=initMap">
-  </script-->
-
   #trips(style = "height:800px;")
     h2 
       center(id="loadTrips-Text") Loading Trips
@@ -496,7 +355,10 @@ block content
     script.
 
 
-    
+      $(document).ready(function() { 
+      var request = "#{request}";
+      loadTrips(request);
+      });
       var isOneWay = false;
       var isAdvancedOptionsOpen = false;
       var maxNights = 7;
@@ -559,15 +421,17 @@ block content
         alert("Please put in a Return and Departure date");
         }
       }
-      function loadTrips(from,to,ddate,rdate){
+      function loadTrips(callURL){
           //rdate is wrong, its actually just one way date window
-          if(isOneWay){
-            callURL = 'https://api.skypicker.com/flights?flyFrom='+from+'&to='+to+'&dateFrom='+ddate+'&dateTo='+rdate+'&partner=picky';
-          }
-          else{
-            callURL = 'https://api.skypicker.com/flights?flyFrom='+from+'&to='+to+'&dateFrom='+ddate+'&dateTo='+rdate+'&returnFrom='+ddate+'&returnTo='+rdate+'&daysInDestinationFrom='+minNights+'&daysInDestinationTo='+maxNights+'&typeFlight=round'+'&partner=picky';
-          }
+          //- if(isOneWay){
+          //-   callURL = 'https://api.skypicker.com/flights?flyFrom='+from+'&to='+to+'&dateFrom='+ddate+'&dateTo='+rdate+'&partner=picky';
+          //- }
+          //- else{
+          //-   callURL = 'https://api.skypicker.com/flights?flyFrom='+from+'&to='+to+'&dateFrom='+ddate+'&dateTo='+rdate+'&returnFrom='+ddate+'&returnTo='+rdate+'&daysInDestinationFrom='+minNights+'&daysInDestinationTo='+maxNights+'&typeFlight=round'+'&partner=picky';
+          //- }
           //Guess Im sorting after by days in destination? lol...
+          $( "#trips" ).show();
+          callURL= 'https://api.skypicker.com/'+callURL;
           console.log(callURL);
           $.ajax({
             url: callURL, 
@@ -585,7 +449,7 @@ block content
                 $('#loadTrips-Text').text("Flights")
                 var airlines={};
                 lookup={};
-                loadIATA("data/iata.json", function(response) {
+                loadIATA("/data/iata.json", function(response) {
             
                   airlines = JSON.parse(response);
                   airlines.forEach(function (el, i, arr) {
@@ -596,7 +460,7 @@ block content
 
                 });
                 $("#price_table").show();
-                $('pre').html(JSON.stringify(data, undefined, 2));
+                //$('pre').html(JSON.stringify(data, undefined, 2));
       }
       function createFlightTable(data){
               for(var i =0;i<data.data.length;i++){

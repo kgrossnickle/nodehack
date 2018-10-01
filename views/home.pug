@@ -85,27 +85,34 @@ block content
       .search(style="background-color: rgba(22, 93, 234, 0.56);display: inline-block; border-radius: 10px; width:100%;   padding: 25px;padding-top:5px;  justify-content: center;margin: 0 auto;")  
         //button.btn.btn-sm.btn-primary(style="display:inline-block;margin: 0 auto;margin-left:23px;margin-bottom:15px;color:#c9d4d2;margin-top:5px;margin-right:4px;background-color:#38b6aa;border-color:#007496;") One Way
         //button.btn.btn-sm.btn-primary( id="roundtrip" style="text-decoration:underline;text-decoration-color:#007496;display:inline-block;margin-bottom:15px;margin-top:5px;margin-right:4px;background-color:#38b6aa;border-color:#007496;") Round Trip
-        a(id="oneway" style="display:inline-block;color:white;margin-right:15px;margin-left:15px;padding-bottom:5px;cursor: pointer;" onclick='oneWayRoundTrip(id)') One Way
-        a(id="roundtrip" style="display:inline-block;color:white;margin-right:15px;margin-left:15px;padding-bottom:5px;text-decoration:underline;cursor: pointer;" onclick='oneWayRoundTrip(id)' ) Round Trip
-        a(id="advancedOptions"  onclick='advancedOptions()' style="display:inline-block;color:white;margin-right:15px;margin-left:15px;padding-bottom:5px;cursor: pointer;") Advanced Options
-        div(id="advancedOptionsTray")
-          a(style="display:inline-block;color:white;margin-right:15px;margin-left:15px;padding-bottom:5px;") Min Nights at Destination
-          select(style="display:inline-block;" id="minNights" onchange="minmaxNights(id)")
-          a(style="display:inline-block;color:white;margin-right:15px;margin-left:15px;padding-bottom:5px;") Max Nights at Destination
-          select(style="display:inline-block;" id="maxNights" onchange="minmaxNights(id)")
         form( class="form-inline" action="/" method="post" style="display:table;margin:0 auto;")
-          input(type='hidden', name='_csrf', value=_csrf)
+          div()
+            a(id="oneway" style="display:inline-block;color:white;margin-right:15px;margin-left:15px;padding-bottom:5px;cursor: pointer;" onclick='oneWayRoundTrip(id)') One Way
+            a(id="roundtrip" style="display:inline-block;color:white;margin-right:15px;margin-left:15px;padding-bottom:5px;text-decoration:underline;cursor: pointer;" onclick='oneWayRoundTrip(id)' ) Round Trip
+            a(id="advancedOptions"  onclick='advancedOptions()' style="display:inline-block;color:white;margin-right:15px;margin-left:15px;padding-bottom:5px;cursor: pointer;") Advanced Options
+            div(id="advancedOptionsTray")
+              a(style="display:inline-block;color:white;margin-right:15px;margin-left:15px;padding-bottom:5px;") Min Nights at Destination
+              select(style="display:inline-block;" id="minNights" onchange="minmaxNights(id)")
+              a(style="display:inline-block;color:white;margin-right:15px;margin-left:15px;padding-bottom:5px;") Max Nights at Destination
+              select(style="display:inline-block;" id="maxNights" onchange="minmaxNights(id)")
+              input(type='hidden', name='isOneWay', id="isOneWay", value="roundtrip")
+              input(type='hidden', name='minNights', id="minNightsInput", value="2")
+              input(type='hidden', name='maxNights', id="maxNightsInput", value="7")
+              input(type='hidden', name='departdatehidden', id="departdatehidden", value="")
+              input(type='hidden', name='returndatehidden', id="returndatehidden", value="")
+          div()
+            input(type='hidden', name='_csrf', value=_csrf)
 
-          input.form-control(class="autocomplete-airport" type="text" name="r16R71!" autocomplete="false" style="text-align:center;height:15vh;background-color: #f4f6f8;color: #57626c;" id="From" placeholder="From" )
-          input.form-control(class="autocomplete-airport" type='text', name='r16R71', autocomplete="false" style="text-align:center;height:15vh;background-color: #f4f6f8;color: #57626c;" id="To" placeholder="To")
-          input.form-control(type='select', name='r16R71', id="depart", autocomplete="false" style="color:#FFFFFF;text-align:center;height:15vh;background-color:#16eadc;//#38b6aa;")
-          input.form-control(type='none', name='r16R71', id='return', autocomplete="false" style="text-align:center;height:15vh;color:#FFFFFF;background-color:#16eadc;//#38b6aa;")
-          //div(style="  text-align: center;")
-            button.btn.btn-sm.btn-light(id="showmapbutton" onclick="showmap()" style="  text-align: center;height:15vh;") Use Map 
-              i.fas.fa-globe-americas
-              div(style="  width:100%; text-align: center;")       
-          button.btn.btn-lg.btn-primary(type="submit" style="width:90%;height:15vh;padding-left:40px;padding-right:40px;display:table;margin: 0 auto;background-color:#168eea;border-color:#007496;" onclick='showTrips()') Go 
-
+            input.form-control(class="autocomplete-airport" type="text" name="flyingfrom0" autocomplete="false" style="text-align:center;height:15vh;background-color: #f4f6f8;color: #57626c;" id="From" placeholder="From" )
+            input.form-control(class="autocomplete-airport" type='text', name='flyingto0', autocomplete="false" style="text-align:center;height:15vh;background-color: #f4f6f8;color: #57626c;" id="To" placeholder="To")
+            input.form-control(type='select', name='datefrom0', id="depart", autocomplete="false" style="color:#FFFFFF;text-align:center;height:15vh;background-color:#16eadc;//#38b6aa;")
+            input.form-control(type='none', name='dateto0', id='return', autocomplete="false" style="text-align:center;height:15vh;color:#FFFFFF;background-color:#16eadc;//#38b6aa;")
+            //div(style="  text-align: center;")
+              button.btn.btn-sm.btn-light(id="showmapbutton" onclick="showmap()" style="  text-align: center;height:15vh;") Use Map 
+                i.fas.fa-globe-americas
+                div(style="  width:100%; text-align: center;")       
+            button.btn.btn-lg.btn-primary(type="submit" style="width:90%;height:15vh;padding-left:40px;padding-right:40px;display:table;margin: 0 auto;background-color:#168eea;border-color:#007496;" ) Go 
+              //onclick='showTrips()'
     div(style = "text-align:center;   width:100%;margin-bottom:80px;")
         div(style="  display: inline-block;margin: 0px auto;margin:30px;")
           <img src="/img/symbols/cpu2.png" height="110px" alt="Expedia logo vector" style="margin-right:30px;"/>
@@ -139,17 +146,6 @@ block content
         <img src="/img/logos/priceline.png" height="35px" alt="Expedia logo vector" />
         <img src="/img/logos/skyscanner.png" height="35px" alt="Expedia logo vector" />
 
-  //form(method='POST')
-    input(type='hidden', name='_csrf', value=_csrf)
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right(for='departDate') Date
-      .col-md-7
-        input.form-control(type='departDate', name='departDate', id='departDate', placeholder='Depart Date', autofocus, required)
-    .form-group
-      .offset-sm-3.col-md-7.pl-2
-        button.col-md-3.btn.btn-primary(type='submit')
-          i.far.fa-user.fa-sm
-          | Save Trip?
   script.
       var ddate;
       var rdate;
@@ -320,6 +316,7 @@ block content
           format: 'MMMM DD YYYY',
           onSelect: function() {
                ddate = this.getMoment().format("DD/MM/YYYY");
+               $("#departdatehidden").val(ddate);
           }
       });
       var pickerReturn = new Pikaday({
@@ -327,6 +324,7 @@ block content
           format: 'MMMM DD YYYY',
           onSelect: function() {
               rdate = this.getMoment().format("DD/MM/YYYY");
+              $("#returndatehidden").val(rdate);
           }
       });
     $(document).ready(function() { 
@@ -515,8 +513,11 @@ block content
       function minmaxNights(id){
         if(id=="maxNights"){
           maxNights = document.getElementById(id).value;
+          $('#maxNightsInput').val(maxNights);
+
         }else{
           minNights = document.getElementById(id).value;
+          $('#minNightsInput').val(minNights);
         }
       }
       function advancedOptions(){
@@ -534,16 +535,19 @@ block content
             document.getElementById(id).style.textDecoration = "underline";
             document.getElementById("roundtrip").style.textDecoration = "";
             isOneWay = true;
+            $('#isOneWay').val('oneway');
         }
         else{
             document.getElementById(id).style.textDecoration = "underline";
             document.getElementById("oneway").style.textDecoration = "";
+            isOneWay =false;
+            $('#isOneWay').val('roundtrip');
         }
       }
       function showTrips(){
 
-        if(!isOneWay&&maxNights<=minNights){
-          alert("Maximum night stay must be less than minimum nights!");
+        if(!isOneWay&&maxNights<minNights){
+          alert("Maximum night stay must be more than minimum nights!");
         }
         else if(ddate&&rdate){
           $( "#trips" ).show();
@@ -565,6 +569,7 @@ block content
             callURL = 'https://api.skypicker.com/flights?flyFrom='+from+'&to='+to+'&dateFrom='+ddate+'&dateTo='+rdate+'&partner=picky';
           }
           else{
+
             callURL = 'https://api.skypicker.com/flights?flyFrom='+from+'&to='+to+'&dateFrom='+ddate+'&dateTo='+rdate+'&returnFrom='+ddate+'&returnTo='+rdate+'&daysInDestinationFrom='+minNights+'&daysInDestinationTo='+maxNights+'&typeFlight=round'+'&partner=picky';
           }
           //Guess Im sorting after by days in destination? lol...
