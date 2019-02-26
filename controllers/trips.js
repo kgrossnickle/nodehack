@@ -22,7 +22,7 @@ exports.getTripwithID = (req, res) => {
   var request = req.url;
   request = request.slice(7);
   console.log(req.params['flyFrom']);
-  console.log("trip query is: "+request);
+  console.log("trip query is: "+JSON.stringify(qdata));
 
   res.render('trips', {
     title: "Finding Trips",
@@ -30,7 +30,8 @@ exports.getTripwithID = (req, res) => {
     request: request,
     flyFrom: qdata.flyFrom,
     to: qdata.to,
-    dateFrom : qdata.returnFrom
+    dateFrom : qdata.returnFrom,
+    dateTo : qdata.returnTo
   });
 };
 

@@ -66,6 +66,21 @@ block content
         vertical-align:middle;
         text-align:center;
         }
+      .odd:hover{
+        background-color: #16eadc;/*#7da3f7;*/
+        }
+      .even:hover{
+        background-color: #16eadc;
+        }
+      .odd:hover #moreInfoButton{
+         display:inline-block;
+        }
+      .even:hover #moreInfoButton{
+        display:inline-block;
+        }
+        .table tr #moreInfoButton{
+        display:none;
+        }
       //- input.form-control::placeholder {
       //-     color: white;
       //-     opacity: 1; /* Firefox */
@@ -93,10 +108,10 @@ block content
         form( class="form-inline" style="display:table;margin:0 auto;")
           input(type='hidden', name='_csrf', value=_csrf)
 
-          input.form-control(class="autocomplete-airport" type="text" name="r16R71!" autocomplete="false" style="text-align:center;height:8vh;background-color: #f4f6f8;color: #57626c;" id="From" value=flyFrom )
-          input.form-control(class="autocomplete-airport" type='text', name='r16R71', autocomplete="false" style="text-align:center;height:8vh;background-color: #f4f6f8;color: #57626c;" id="To" placeholder="To")
-          input.form-control(type='select', name='r16R71', id="depart", autocomplete="false" style="color:#FFFFFF;text-align:center;height:8vh;background-color:#16eadc;//#38b6aa;")
-          input.form-control(type='none', name='r16R71', id='return', autocomplete="false" style="text-align:center;height:8vh;color:#FFFFFF;background-color:#16eadc;//#38b6aa;")
+          input.form-control(class="autocomplete-airport" type="text" name="r16R71!" autocomplete="false" style="text-align:center;height:8vh;background-color: #f4f6f8;color: #57626c;" id="From" value=flyFrom)
+          input.form-control(class="autocomplete-airport" type='text', name='r16R71', autocomplete="false" style="text-align:center;height:8vh;background-color: #f4f6f8;color: #57626c;" id="To" placeholder="To" value=to)
+          input.form-control(type='select', name='r16R71', id="depart", autocomplete="false" style="color:#FFFFFF;text-align:center;height:8vh;background-color:#16eadc;//#38b6aa;" )
+          input.form-control(type='none', name='r16R71', id='return', autocomplete="false" style="text-align:center;height:8vh;color:#FFFFFF;background-color:#16eadc;//#38b6aa;" )
           button.btn.btn-lg.btn-primary(type="button" style="height:8vh;background-color:#168eea;border-color:#007496;margin: 0 auto;text-align:center" onclick='showTrips()')
             i.fas.fa-search.fa-sm
 
@@ -108,8 +123,8 @@ block content
       var ddate;
       var rdate;
       var mapHidden = true;
-      $('#depart').val("Beginning Date");
-      $('#return').val("End Date");
+      $('#depart').val(moment('#{dateFrom}','DD/MM/YYYY').format('MMMM DD YYYY'));
+      $('#return').val(moment('#{dateTo}','DD/MM/YYYY').format('MMMM DD YYYY'));
 
 
       var options = {
@@ -287,8 +302,20 @@ block content
       $.noConflict();
       $( "#trips" ).hide();
       $( "#map" ).hide();
-      $('#price_table').DataTable();
-      $("#price_table").hide();
+      var table = $('#price_table').DataTable({
+            dom:
+                "<'row'<'col-sm-3'l><'col-sm-6 text-center'B><'col-sm-3'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>" 
+      });
+      $('#price_table tbody')
+        .on( 'mouseenter', 'td', function () {
+            var colIdx = table.cell(this).index().column;
+ 
+            $( table.cells().nodes() ).removeClass( 'highlight' );
+            $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
+        } );
+      //$("#price_table").hide();
      });
      function showmap(){
        if(mapHidden){
@@ -341,7 +368,7 @@ block content
                 <td>700$</td>
                 <td>Air France</td>
                 <td>10 hours</td>
-            </tr>
+            </tr-->
         </tbody>
         <!--tfoot>
             <tr>
@@ -494,7 +521,8 @@ block content
                   var oneOrTwoAirlines = data.data[i].airlines.length;
                   $('#price_table').DataTable().row.add([
                     "$"+data.data[i].price, "<div style='display:flex;height:100%;width:100%;align-items:center;text-align:center;margin-top: 12px;'><div style='width:50%;'><img style='float: center;vertical-align: middle;height:100%;' alt='Spirit Airlines' src='//images.kiwi.com/airlines/32x32/"+data.data[i].airlines[oneOrTwoAirlines-oneOrTwoAirlines]+".png' srcset='//images.kiwi.com/airlines/64x64/"+data.data[i].airlines[oneOrTwoAirlines-oneOrTwoAirlines]+".png 2x'> "+lookup[data.data[i].airlines[oneOrTwoAirlines-oneOrTwoAirlines]]+" " + dtime+" - "+atime+"<br>"+ddate+"</div>"
-                    +
+                    
+                    +"<button id='moreInfoButton'class='btn btn-lg btn-primary' type='button' style='height:8vh;background-color:#168eea;border-color:#007496;margin: 0 auto;text-align:center' onclick=\"window.open('"+data.data[i].deep_link+"','_blank')\">Info/<i class='fas fa-shopping-cart fa-sm'></i></button>"+
 
                     "<div style='width:50%;'><img style='float: center;vertical-align: middle;height:100%;' alt='Spirit Airlines' src='//images.kiwi.com/airlines/32x32/"+data.data[i].airlines[oneOrTwoAirlines-1]+".png' srcset='//images.kiwi.com/airlines/64x64/"+data.data[i].airlines[oneOrTwoAirlines-1]+".png 2x'> "+lookup[data.data[i].airlines[oneOrTwoAirlines-1]]+" " + dtime+" - "+atime+"<br>"+ddate+"</div></div>", dur
                   ]).draw();
@@ -513,5 +541,4 @@ block content
                   };
                   xobj.send(null);  
                 }
-
 
